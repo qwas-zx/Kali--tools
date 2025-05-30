@@ -35,8 +35,6 @@
 - **日志查看**：安装问题可查看同目录下的`install_log.txt`，用`cat install_log.txt | grep "ERROR"`快速定位错误
 
 ## 🛠️ 新增故障排查系统
-![智能诊断流程图](https://i.imgur.com/7v8Vd7Y.png)
-
 ### 使用教程
 ```bash
 # 运行自动诊断
