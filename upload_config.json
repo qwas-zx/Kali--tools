@@ -45,7 +45,7 @@
         "commit_message": "Initial commit: Penetration Testing Tools Auto-Downloader",
         "remote": {
             "name": "origin",
-            "url": "https://github.com/qwas-zx/Kali--tools"
+            "url": "git@github.com:qwas-zx/Kali--tools"
         }
     },
     "checks": {
