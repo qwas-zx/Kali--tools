@@ -2,8 +2,9 @@
 Thumbs.db
 *.log
 *.tmp
-/opt/pentest_tools/
+/opt/pentest_tools/*
+/.git/*
+/.github/*
 .cursorrules
-update.log
 update.sh
 update.py
