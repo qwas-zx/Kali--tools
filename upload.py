@@ -110,7 +110,12 @@ class RepoUploader:
             subprocess.run(['git', 'branch', '-M', initial_branch], check=True)
             print("✅ 分支名称已设置为: main")
 
-            subprocess.run(['git', 'remote', 'add', 
+            # 添加远程仓库前先删除已有origin
+            try:
+                subprocess.run(['git', 'remote', 'remove', self.config['git']['remote']['name']], check=True)
+            except subprocess.CalledProcessError:
+                pass  # 如果远程不存在则忽略错误
+            subprocess.run(['git', 'remote', 'add',
                              self.config['git']['remote']['name'],
                              self.config['git']['remote']['url']], check=True)
             print("✅ 远程仓库已添加")
