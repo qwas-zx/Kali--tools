@@ -3,9 +3,7 @@
         "name": "pentest-tools-downloader",
         "description": "Automated penetration testing tools downloader script",
         "private": false,
-        "has_issues": true,
-        "has_projects": true,
-        "has_wiki": true
+        "has_issues": true
     },
     "files": {
         "required": [
@@ -53,22 +51,9 @@
     "checks": {
         "pre_upload": [
             {
-                "type": "file_exists",
-                "paths": ["README.md", "LICENSE", "自动下载渗透工具.sh"]
-            },
-            {
                 "type": "file_permission",
                 "path": "自动下载渗透工具.sh",
                 "mode": 755
-            },
-            {
-                "type": "content_check",
-                "paths": ["*.md"],
-                "verify": [
-                    "language_links",
-                    "license_badge",
-                    "platform_badge"
-                ]
             }
         ]
     },

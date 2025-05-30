@@ -50,11 +50,29 @@ configure_git() {
   fi
 }
 
+# 创建.gitignore
+create_gitignore() {
+  echo "📝 创建.gitignore..."
+  jq -r '.ignore_patterns[]' "$CONFIG_PATH" > .gitignore
+}
+
+# Git推送逻辑
+git_push() {
+  echo "🚀 正在推送代码到GitHub..."
+  for i in {1..3}; do
+    if git push -u origin "$(jq -r '.git.initial_branch' "$CONFIG_PATH")"; then
+      echo "✅ 推送成功"
+      return 0
+    else
+      echo "⚠️ 第$i次推送失败，10秒后重试"
+      sleep 10
+    fi
+  done
+  echo "❌ 推送失败，请检查网络连接或权限"
+  return 1
+}
+
 # 主执行流程
-# 在主流程中添加依赖检查
-
-
-# 更新主流程
 main() {
   check_dependencies
   config=$(read_config) || exit 1
@@ -69,29 +87,11 @@ main() {
     git branch -M "$(jq -r '.git.initial_branch' "$CONFIG_PATH")"
     git remote add "$(jq -r '.git.remote.name' "$CONFIG_PATH")" \
       "$(jq -r '.git.remote.url' "$CONFIG_PATH" | sed 's/\/$//')"
-    git push -u origin "$(jq -r '.git.initial_branch' "$CONFIG_PATH")"
+    git_push || exit 1
   else
     echo "ℹ️  Git仓库已存在，跳过初始化"
+    git_push || exit 1
   fi
-  git_push || exit 1
-}
-
-# 新增推送逻辑
-git_push() {
-  echo "🚀 正在推送代码到GitHub..."
-  local max_retries=5
-    local retry_interval=30
-    for ((i=1; i<=max_retries; i++)); do
-    if git push -u origin $(jq -r '.git.initial_branch' $CONFIG_PATH); then
-      echo "✅ 推送成功"
-      return 0
-    else
-      echo "⚠️ 第${i}/${max_retries}次推送失败，${retry_interval}秒后重试"
-      sleep $retry_interval
-    fi
-  done
-  echo "❌ 推送失败，请检查网络连接或权限"
-  return 1
 }
 
 main "$@"
