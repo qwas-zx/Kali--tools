@@ -1,0 +1,9 @@
+.DS_Store
+Thumbs.db
+*.log
+*.tmp
+/opt/pentest_tools/
+.cursorrules
+update.log
+update.sh
+update.py
